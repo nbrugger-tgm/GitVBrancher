@@ -1,0 +1,31 @@
+plugins {
+    id 'application'
+    id 'org.beryx.jlink' version '2.21.4'
+}
+version = 1.0
+java {
+    targetCompatibility JavaVersion.VERSION_11
+    sourceCompatibility JavaVersion.VERSION_11
+    modularity.inferModulePath = true
+}
+application {
+    mainModule = 'com.niton.gitbrancher' // name defined in module-info.java
+    mainClass = 'com.niton.gitbrancher.App'
+}
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+dependencies {
+    // Use JUnit Jupiter API for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+
+    // Use JUnit Jupiter Engine for testing.
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+}
+
+test {
+    // Use junit platform for unit tests
+    useJUnitPlatform()
+}
