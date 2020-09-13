@@ -4,9 +4,13 @@ plugins {
 }
 version = 1.0
 java {
-    targetCompatibility JavaVersion.VERSION_11
-    sourceCompatibility JavaVersion.VERSION_11
-    modularity.inferModulePath = true
+    targetCompatibility JavaVersion.VERSION_1_9
+    sourceCompatibility JavaVersion.VERSION_1_9
+}
+plugins.withType(JavaPlugin).configureEach {
+    java {
+        modularity.inferModulePath = true
+    }
 }
 application {
     mainModule = 'com.niton.gitbrancher' // name defined in module-info.java
@@ -16,8 +20,21 @@ repositories {
     mavenLocal()
     jcenter()
 }
-
+compileJava {
+    inputs.property('moduleName', application.mainModule)
+    doFirst {
+        options.compilerArgs = [
+                '--module-path', classpath.asPath
+        ]
+        classpath = files()
+    }
+}
 dependencies {
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.niton:media-api:2.8.5'
+    implementation 'com.formdev:flatlaf:0.41'
+    implementation 'org.mapdb:mapdb:3.0.8'
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:5.8.1.202007141445-r'
     // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
 
